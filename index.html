@@ -6,14 +6,15 @@
     <title>Familjens Kalender</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+/* Grundstil */
 body {
     font-family: 'Segoe UI', Tahoma, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #ff4d4d, #28a745); /* Julig gradientbakgrund */
+    background: linear-gradient(135deg, #ff4d4d, #28a745);
     color: #333;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden; /* Förhindra horisontell scroll */
 }
 
 /* Snöflingor */
@@ -52,13 +53,13 @@ header {
     background: linear-gradient(135deg, #ff4d4d, #28a745);
     color: white;
     text-align: center;
-    padding: 2rem 0;
+    padding: 1.5rem 0; /* Mindre padding för mobilen */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 header h1 {
     margin: 0;
-    font-size: 2rem;
+    font-size: 1.8rem; /* Mindre textstorlek för bättre mobilanpassning */
     text-transform: uppercase;
     letter-spacing: 1.5px;
 }
@@ -86,7 +87,7 @@ header h1 {
 
 .reset-button button {
     padding: 0.75rem 2rem;
-    background: linear-gradient(135deg, #28a745, #1e7c34); /* Julgrönt */
+    background: linear-gradient(135deg, #28a745, #1e7c34);
     color: white;
     border: none;
     border-radius: 25px;
@@ -109,16 +110,17 @@ header h1 {
     gap: 1rem;
     width: 100%;
     max-width: 700px;
+    flex-wrap: wrap; /* Gör att knappar lägger sig snyggt på mindre skärmar */
 }
 
 .week-navigation button {
-    padding: 0.75rem 2rem;
-    background: linear-gradient(135deg, #28a745, #1e7c34); /* Grönt */
+    padding: 0.5rem 1.5rem;
+    background: linear-gradient(135deg, #28a745, #1e7c34);
     color: white;
     border: none;
     border-radius: 25px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.9rem; /* Mindre textstorlek */
     font-weight: bold;
     transition: transform 0.2s, background-color 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -130,7 +132,7 @@ header h1 {
 }
 
 #current-view {
-    font-size: 1.5rem;
+    font-size: 1.2rem; /* Mindre textstorlek */
     color: #333;
     text-transform: uppercase;
     text-align: center;
@@ -140,16 +142,16 @@ header h1 {
 /* Dagkort */
 .view {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1rem;
-    margin: 2rem 0;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Anpassa till mobilstorlek */
+    gap: 0.5rem; /* Mindre mellanrum för mobil */
+    margin: 1rem 0; /* Mindre marginaler */
 }
 
 .day-card {
-    padding: 1rem;
+    padding: 0.8rem; /* Mindre padding */
     background: white;
-    border-radius: 15px;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.3s ease;
@@ -157,7 +159,7 @@ header h1 {
 
 .day-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 .day-card.today {
@@ -178,14 +180,14 @@ header h1 {
 
 .day-card h3 {
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 1rem; /* Mindre textstorlek */
     text-transform: capitalize;
 }
 
 .day-card p {
-    margin: 0.5rem 0;
+    margin: 0.3rem 0; /* Mindre marginal */
     color: #555;
-    font-size: 0.9rem;
+    font-size: 0.8rem; /* Mindre textstorlek */
 }
 
 /* Uppgiftslista */
@@ -202,38 +204,18 @@ header h1 {
     background: #fff;
 }
 
-.tasks-list .kevin {
-    background-color: #28a745;
-    color: white;
-}
-
-.tasks-list .elin {
-    background-color: #dc3545;
-    color: white;
-}
-
-.tasks-list .bebis {
-    background-color: #ffc107;
-    color: white;
-}
-
-.tasks-list .completed {
-    text-decoration: line-through;
-    background-color: #d3d3d3 !important;
-}
-
 /* Diagramsektionen */
 .chart-container {
-    max-width: 500px;
-    margin: 2rem auto;
-    padding: 1rem;
+    max-width: 300px; /* Mindre storlek för mobil */
+    margin: 1rem auto; /* Mindre marginal */
+    padding: 0.5rem;
     background: rgba(255, 255, 255, 0.8);
-    border-radius: 15px;
+    border-radius: 10px; /* Rundare hörn */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 canvas#progressChart {
-    max-height: 300px;
+    max-height: 200px; /* Mindre höjd */
     max-width: 100%;
 }
 
@@ -241,10 +223,10 @@ canvas#progressChart {
 input#task-input,
 select#task-assignee,
 button {
-    padding: 0.75rem;
+    padding: 0.5rem; /* Mindre padding */
     border: 1px solid #ddd;
-    border-radius: 25px;
-    font-size: 1rem;
+    border-radius: 15px;
+    font-size: 0.9rem; /* Mindre textstorlek */
     outline: none;
 }
 
@@ -270,33 +252,6 @@ button:hover {
         opacity: 1;
     }
 }
-
-/* Mobilanpassning */
-@media (max-width: 768px) {
-    .view {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 0.5rem;
-    }
-
-    .chart-container {
-        max-width: 300px;
-    }
-
-    .week-navigation {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    input#task-input,
-    select#task-assignee {
-        width: 100%; /* Anpassa bredden för mobil */
-    }
-
-    button {
-        width: 100%; /* Knappar fyller mobilbredd */
-    }
-}
-
 
     </style>
 </head>
