@@ -1,213 +1,511 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detaljerade Sortbytesinstruktioner</title>
+    <title>Familjens Kalender</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body {
-            background-color: #1f1f1f;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
+/* Bakgrund och typsnitt */
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #ff4d4d, #28a745); /* Julig gradientbakgrund */
+    color: #333;
+    position: relative;
+    overflow: hidden;
+}
 
-        .container {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #222;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-        }
+/* Snöflingor */
+#snowflakes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+}
 
-        .step {
-            cursor: pointer;
-            padding: 10px;
-            margin-bottom: 5px;
-            border: 1px solid #404040;
-            border-radius: 5px;
-          }
+.snowflake {
+    position: absolute;
+    top: -10px;
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: fall linear infinite;
+}
 
-        .content {
-            display: none;
-            padding-left: 20px;
-            margin-bottom: 20px;
-        }
-
-        .completed {
-            background-color: #76b900;
-        }
-
-        button {
-            margin-top: 10px;
-            padding: 5px 10px;
-            background-color: #76b900;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .lock-per-pall {
-            color: #76b900;
-        }
- .lol {
-            color: #ff0000; /* Ändra till önskad färg */
-        }
-.logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .logo img {
-            width: 300px;
-            height: auto;
-        }
-    </style>
-
-</head>
-<body>
-
-    
-<div class="container">
- <div class="logo">
-        <img src="carlsberg-sverige_rbg.png" alt="Carlsberg logo">
-</div>
-    <h1>Sortbytesinstruktioner</h1>
-
-
-    <!-- Lockbyte Section -->
-    <div class="step">Har du lockbyte?</div>
-    <div class="content">
-        
-        <p>Räkna 110 000 burkar minus den totala mängden vi ska köra på denna order!</p>
-<p>Fyll upp bandet med maximalt 4 rullar höga.</p>
-<p>Passa på att fylla upp bandet med nya lock, <p class="lol">OBS</p>Glöm inte att lägga plåten mellan dom gamla locken och dom nya locken.</p>
-<p>Invänta att pallastarn ringer dig.</p>
-<p>Plocka bort alla gamla rullar från bordet.</p>
-        <button onclick="completeStep(this)">Markera som genomfört</button>
-    </div>
-
-    <!-- Öl till öl Section -->
-    <div class="step">Öl till öl</div>
-    <div class="content">
-       <div class="container">
-    <p class="lock-per-pall">Steg 1 Pastör</p></p>Tryck bort larm</p>
-</p>Sätt in nya tanken</p>
-</p>Om värdena är rätt tryck sortbyte (mindre än 65-67%)</p>
-</p>Släpp cirkulation</p> invänta sista burkarna.</p></p> </div>
-  <div class="container">
-    <p class="lock-per-pall">Steg 2 Tapp</p></p>Stäng ventil till burkbana</p>
-</p>Öppna tömning av burbanan</p>
-</p>Stäng inmatning av burkar</p>
-</p>Nolla räkning</p>
-</p>Töm tappen (filler drain)</p></p> </div>
-
-
-<div class="container">
-    <p class="lock-per-pall">Steg 3 Pastör</p>Restöl eller dränage</p> </div>
-<div class="container">
-    <p class="lock-per-pall">Tunnelpastör om du kör alkoholfritt:</p>Dekorbyte: program —> funktioner —> dekorbyte:</p> </div>
-<div class="container">
-<p class="lock-per-pall">Steg 4 Töm banorna</p>Klicka tömning på panelen vid banorna och gå till slutet av banan och töm med golvskrapan</p> </div>
-<div class="container">
-    <p class="lock-per-pall">Steg 5 Pastör</p>När tanken är tömd ta in ny öl</p>Släpp cirkulation</p>
-</p>Produktion och aktivera</p> </div>
-
-
-<div class="container">
-    <p class="lock-per-pall">Steg 6 Dator</p>Stoppa order
-Starta ny order
-Nolla första heuft och skriv upp</p> </div>
-
-
-<div class="container">
-    <p class="lock-per-pall">Steg 7 Tapp:</p> </p>Aktivera intag av öl: flagga —> bubblorna —> flagga</p>
-</p>Starta tapp med grön knapp</p>
-</p>(Om lockbyte plocka ut gamla lock)
-(Om rengöring starta COP efter att tappen blåst färdigt och gått ner i fart)</p>
-</p>Släpp ner burkarna och starta produktion</p></div>
-        <button onclick="completeStep(this)">Markera som genomfört</button>
-    </div>
-
-    <!-- Läsk till läsk Section -->
-    <div class="step">Läsk till läsk</div>
-    <div class="content">
-         <div class="container">
-    <p class="lock-per-pall">Steg 1 Mixern:</p>När tank tom,
-Stoppa cirkulationspilen</p>
-</p>Syrup, Stop, Flagga</p> Syrup run out, Starta med cirkulationspilen, Stäng ventil till burkbana</p> </div>
-
-  <div class="container">
-    <p class="lock-per-pall">Steg 2 Tapp:</p>Stäng ventil till burkbana</p>
-</p>Öppna tömning av burbanan</p>
-</p>Stäng inmatning av burkar</p>
-</p>Nolla räkning</p>
-</p>Töm tappen (filler drain)</p> </div>
-
-<div class="container">
-    <p class="lock-per-pall">Steg 3 Mixer:</p>Aktivera knapp bredvid lampa (dränage manuellt.</p>
-</p>AVM315</p>
-</p>Hand, Stäng av, Flagga</p>
-</p>Cold rinse</p>
-</p>Aktivera med cirkulationspil</p> </div>
-
-<div class="container">
-<p class="lock-per-pall">Steg 4 Töm banorna:</p>Klicka tömning på panelen vid banorna och gå till slutet av banan och töm med golvskrapan</p> </div>
-<div class="container">
-    <p class="lock-per-pall">Steg 5 Tapp:</p>Stoppa filler drain</p>
-</p>Starta tapp, Flagga, H2O, Flagga </p>(Om omfärgad dryck körs kör cold rinse två ggr i både mixer och tapp)</p></div>
-
-<div class="container">
-    <p class="lock-per-pall">Steg 6 Dator:</p> Stoppa order
-Starta ny order
-Nolla första heuft och skriv upp</p></div>
-
-<div class="container">
-    <p class="lock-per-pall">Steg 7 Mixer:</p>Boken</p>
-</p>Välj recept, Springande gubbe,Välj rätt vatten genom stopp och vattensort </p>
-</p>När mixer är klar så välj in rätt tank syrup.</p>
-</p>Välj tank —> shift, Flagga, Product tank pressurize,Syrup tank preparation</p>
-</p>Tryck bort larm, Aktivera med cirkulationspil </p> </div>
-        <button onclick="completeStep(this)">Markera som genomfört</button>
-    </div>
-
-</div>
-
-<script>
-document.querySelectorAll('.step').forEach(function(step) {
-    step.addEventListener('click', function() {
-        var content = this.nextElementSibling;
-        // Toggla synlighet för innehållet
-        if (content.style.display === "block" || content.style.display === "") {
-            content.style.display = "none";
-        } else {
-            content.style.display = "block";
-        }
-    });
-});
-
-function completeStep(button) {
-    var content = button.parentElement;
-    var step = content.previousElementSibling;
-    step.classList.add('completed'); // Markera steget som slutfört
-    content.style.display = "none"; // Dölj innehållet
-
-    // Hitta och visa nästa stegs innehåll (valfritt baserat på din logik)
-    // Detta steg är valfritt och beror på om du vill att nästa steg automatiskt ska öppnas
-    var nextStep = step.nextElementSibling;
-    if (nextStep && nextStep.nextElementSibling) {
-        var nextContent = nextStep.nextElementSibling;
-        nextContent.style.display = "block";
+@keyframes fall {
+    0% {
+        transform: translateY(0) translateX(0);
+    }
+    100% {
+        transform: translateY(100vh) translateX(calc(-50px + 100vw));
     }
 }
+
+/* Header */
+header {
+    background: linear-gradient(135deg, #ff4d4d, #28a745);
+    color: white;
+    text-align: center;
+    padding: 2rem 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 1rem;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Navigation */
+.navigation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.reset-button {
+    margin-bottom: 1rem;
+}
+
+.reset-button button {
+    padding: 0.75rem 2rem;
+    background: linear-gradient(135deg, #28a745, #1e7c34); /* Julgrönt */
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: transform 0.2s, background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.reset-button button:hover {
+    transform: translateY(-2px);
+    background-color: #1e7c34;
+}
+
+.week-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 700px;
+}
+
+.week-navigation button {
+    padding: 0.75rem 2rem;
+    background: linear-gradient(135deg, #28a745, #1e7c34); /* Grönt */
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: transform 0.2s, background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.week-navigation button:hover {
+    transform: translateY(-2px);
+    background-color: #1e7c34;
+}
+
+#current-view {
+    font-size: 1.5rem;
+    color: #333;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+/* Dagkort */
+.view {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.day-card {
+    padding: 1rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s ease;
+}
+
+.day-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.day-card.today {
+    background: linear-gradient(135deg, #ff4d4d, #28a745);
+    color: white;
+}
+
+.day-card.holiday {
+    background-color: #ffe6e6;
+    border: 2px solid #ff4d4d;
+    color: #ff4d4d;
+}
+
+.day-card.selected {
+    border: 3px solid #28a745;
+    box-shadow: 0 8px 15px rgba(40, 167, 69, 0.3);
+}
+
+.day-card h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    text-transform: capitalize;
+}
+
+.day-card p {
+    margin: 0.5rem 0;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+/* Uppgiftslista */
+.tasks-list li {
+    list-style: none;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: #fff;
+}
+
+.tasks-list .kevin {
+    background-color: #28a745;
+    color: white;
+}
+
+.tasks-list .elin {
+    background-color: #dc3545;
+    color: white;
+}
+
+.tasks-list .bebis {
+    background-color: #ffc107;
+    color: white;
+}
+
+.tasks-list .completed {
+    text-decoration: line-through;
+    background-color: #d3d3d3 !important;
+}
+
+/* Diagramsektionen */
+.chart-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+canvas#progressChart {
+    max-height: 300px;
+    max-width: 100%;
+}
+
+/* Input och knappar */
+input#task-input,
+select#task-assignee,
+button {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    font-size: 1rem;
+    outline: none;
+}
+
+button {
+    background: linear-gradient(135deg, #28a745, #1e7c34);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s, background-color 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    background-color: #1e7c34;
+}
+
+/* Animationer */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Mobilanpassning */
+@media (max-width: 768px) {
+    .view {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 0.5rem;
+    }
+
+    .chart-container {
+        max-width: 300px;
+    }
+
+    .week-navigation {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Familjens Kalender och Uppgifter</h1>
+    </header>
+    <div class="container">
+        <div class="navigation">
+            <div class="reset-button">
+                <button onclick="resetToCurrentWeek()">Återgå till nuvarande vecka</button>
+            </div>
+            <div class="week-navigation">
+                <button onclick="changeView('week', -1)">Föregående vecka</button>
+                <div>
+                    <h2 id="current-view">Denna vecka</h2>
+                    <p class="shift-info" id="shift-info"></p>
+                </div>
+                <button onclick="changeView('week', 1)">Nästa vecka</button>
+            </div>
+        </div>
+        <div id="view" class="view"></div>
+        <div class="chart-container">
+            <canvas id="progressChart"></canvas>
+        </div>
+        <div>
+            <input type="text" id="task-input" placeholder="Ny uppgift">
+            <select id="task-assignee">
+                <option value="kevin">Kevin</option>
+                <option value="elin">Elin</option>
+                <option value="bebis">Bebis</option>
+            </select>
+            <button onclick="addTask()">Lägg till</button>
+        </div>
+    </div>
+   <script>
+    const tasks = {};
+    let currentViewStart = new Date();
+    let selectedDay = null;
+    let isDefaultView = true;
+
+    const shiftSchedule = [
+        "Ledig vecka", "Förmiddag", "Natt", "Eftermiddag", "Daghelg", "Natthelg",
+    ];
+
+    const holidays = [
+        "2024-12-25", "2024-12-31", "2024-01-01", "2024-04-01", "2024-06-06", "2024-12-24"
+    ];
+
+    function initialize() {
+        updateView();
+        initializeChart();
+    }
+
+    function updateView() {
+        const view = document.getElementById("view");
+        const currentViewText = document.getElementById("current-view");
+        const shiftInfoText = document.getElementById("shift-info");
+
+        view.innerHTML = "";
+
+        const today = new Date();
+        const startOfView = new Date(currentViewStart);
+
+        const weekNumber = getWeekNumber(startOfView);
+        const currentShiftIndex = weekNumber % shiftSchedule.length;
+        const currentShift = shiftSchedule[currentShiftIndex];
+
+        currentViewText.textContent = `Vecka ${weekNumber}`;
+        shiftInfoText.textContent = `Skift: ${currentShift}`;
+
+        const daysToShow = 7;
+
+        for (let i = 0; i < daysToShow; i++) {
+            const day = new Date(startOfView);
+
+            if (isDefaultView) {
+                day.setDate(today.getDate() + i);
+            } else {
+                day.setDate(startOfView.getDate() + i);
+            }
+
+            const dayKey = day.toISOString().split("T")[0];
+            const isToday = day.toDateString() === today.toDateString();
+            const isSelected = selectedDay === dayKey;
+            const isHoliday = holidays.includes(dayKey);
+
+            const dayTasks = tasks[dayKey] || [];
+            const card = document.createElement("div");
+            card.className = `day-card ${isToday ? "today" : ""} ${isHoliday ? "holiday" : ""} ${isSelected ? "selected" : ""}`;
+            card.onclick = () => {
+                selectedDay = dayKey;
+                updateView();
+            };
+
+            card.innerHTML = `
+                <h3>${day.toLocaleDateString("sv-SE", { weekday: "long" })}</h3>
+                <p>${day.toLocaleDateString("sv-SE")}</p>
+                ${isHoliday ? '<p style="color: #ff4d4d; font-weight: bold;">Helgdag</p>' : ""}
+                <ul class="tasks-list">
+                    ${dayTasks.map((task, index) => `
+                        <li class="${task.assignee} ${task.completed ? 'completed' : ''}">
+                            ${task.text}
+                            ${!task.completed ? `<button onclick="completeTask('${dayKey}', ${index})">✔</button>` : ''}
+                        </li>`).join("")}
+                </ul>
+            `;
+            view.appendChild(card);
+        }
+    }
+
+    function addTask() {
+        if (!selectedDay) {
+            alert("Välj en dag för uppgiften!");
+            return;
+        }
+
+        const taskInput = document.getElementById("task-input");
+        const taskAssignee = document.getElementById("task-assignee");
+
+        const taskText = taskInput.value.trim();
+        const assignee = taskAssignee.value;
+        if (!taskText) {
+            alert("Ange en uppgift!");
+            return;
+        }
+
+        if (!tasks[selectedDay]) tasks[selectedDay] = [];
+        tasks[selectedDay].push({ text: taskText, assignee, completed: false });
+
+        // Flyganimation
+        const flyTask = document.createElement("div");
+        flyTask.className = "task-fly";
+        flyTask.textContent = `${taskText} (${assignee})`;
+        document.body.appendChild(flyTask);
+        setTimeout(() => flyTask.remove(), 500);
+
+        taskInput.value = "";
+        updateView();
+        updateChart();
+    }
+
+    function completeTask(dayKey, taskIndex) {
+        if (tasks[dayKey]) {
+            tasks[dayKey][taskIndex].completed = true;
+            updateView();
+            updateChart();
+        }
+    }
+
+    function changeView(viewType, direction) {
+        const daysToAdd = viewType === "week" ? 7 : 30;
+        currentViewStart.setDate(currentViewStart.getDate() + direction * daysToAdd);
+
+        isDefaultView = false;
+        currentViewStart.setDate(currentViewStart.getDate() - currentViewStart.getDay() + 1);
+        updateView();
+    }
+
+    function resetToCurrentWeek() {
+        currentViewStart = new Date();
+        isDefaultView = true;
+        updateView();
+    }
+
+    function initializeChart() {
+        const ctx = document.getElementById("progressChart").getContext("2d");
+        window.progressChart = new Chart(ctx, {
+            type: "doughnut",
+            data: {
+                labels: ["Slutförda", "Återstår"],
+                datasets: [{
+                    data: [0, 1],
+                    backgroundColor: ["#28a745", "#dc3545"],
+                }],
+            },
+            options: {
+                responsive: true,
+            },
+        });
+    }
+
+    function updateChart() {
+        const allTasks = Object.values(tasks).flat();
+        const completedTasks = allTasks.filter(task => task.completed).length;
+        const totalTasks = allTasks.length;
+
+        window.progressChart.data.datasets[0].data = [completedTasks, totalTasks - completedTasks];
+        window.progressChart.update();
+    }
+
+    function getWeekNumber(date) {
+        const start = new Date(date.getFullYear(), 0, 1);
+        const diff = (date - start + (start.getDay() + 6) % 7 * 86400000) / 86400000;
+        return Math.ceil(diff / 7);
+    }
+
+    initialize();
+function createSnowflakes() {
+    const snowflakeContainer = document.createElement("div");
+    snowflakeContainer.id = "snowflakes";
+    document.body.appendChild(snowflakeContainer);
+
+    for (let i = 0; i < 100; i++) {
+        const snowflake = document.createElement("div");
+        snowflake.className = "snowflake";
+        snowflake.style.left = `${Math.random() * 100}vw`;
+        snowflake.style.animationDuration = `${5 + Math.random() * 10}s`;
+        snowflake.style.animationDelay = `${Math.random() * 5}s`;
+        snowflakeContainer.appendChild(snowflake);
+    }
+}
+
+createSnowflakes();
+
 </script>
-
-
-
-
 
 </body>
 </html>
