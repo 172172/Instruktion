@@ -291,7 +291,7 @@
             <button onclick="addTask()">Lägg till</button>
         </div>
     </div>
-   <script>
+  <script>
     const tasks = {};
     let currentViewStart = new Date();
     let selectedDay = null;
@@ -386,13 +386,6 @@
         if (!tasks[selectedDay]) tasks[selectedDay] = [];
         tasks[selectedDay].push({ text: taskText, assignee, completed: false });
 
-        // Flyganimation
-        const flyTask = document.createElement("div");
-        flyTask.className = "task-fly";
-        flyTask.textContent = `${taskText} (${assignee})`;
-        document.body.appendChild(flyTask);
-        setTimeout(() => flyTask.remove(), 500);
-
         taskInput.value = "";
         updateView();
         updateChart();
@@ -454,55 +447,57 @@
     }
 
     initialize();
-function createSnowflakes() {
-    const snowflakeContainer = document.createElement("div");
-    snowflakeContainer.id = "snowflakes";
-    document.body.appendChild(snowflakeContainer);
 
-    for (let i = 0; i < 100; i++) {
-        const snowflake = document.createElement("div");
-        snowflake.className = "snowflake";
+    function createSnowflakes() {
+        const snowflakeContainer = document.createElement("div");
+        snowflakeContainer.id = "snowflakes";
+        document.body.appendChild(snowflakeContainer);
 
-        // Slumpmässiga storlekar, opaciteter och drifter
-        snowflake.style.left = `${Math.random() * 100}vw`;
-        snowflake.style.animationDuration = `${5 + Math.random() * 10}s`;
-        snowflake.style.animationDelay = `${Math.random() * 5}s`;
-        snowflake.style.fontSize = `${Math.random() * 1.5 + 0.5}rem`;
-        snowflake.style.opacity = Math.random();
-
-        snowflake.textContent = "❄"; // Lägg till snöflinga som text
-        snowflakeContainer.appendChild(snowflake);
+        for (let i = 0; i < 100; i++) {
+            const snowflake = document.createElement("div");
+            snowflake.className = "snowflake";
+            snowflake.style.left = `${Math.random() * 100}vw`;
+            snowflake.style.animationDuration = `${5 + Math.random() * 10}s`;
+            snowflake.style.animationDelay = `${Math.random() * 5}s`;
+            snowflake.style.fontSize = `${Math.random() * 1.5 + 0.5}rem`;
+            snowflake.style.opacity = Math.random();
+            snowflake.textContent = "❄";
+            snowflakeContainer.appendChild(snowflake);
+        }
     }
-}
 
-createSnowflakes();
+    createSnowflakes();
 
-let lastTouchEnd = 0;
+    let lastTouchEnd = 0;
 
-document.addEventListener("touchend", function (event) {
-    const now = new Date().getTime();
-    if (now - lastTouchEnd <= 300) {
-        event.preventDefault(); // Förhindra dubbelklicks-zoom
-    }
-    lastTouchEnd = now;
-}, false);
-document.querySelectorAll("button").forEach(button => {
-    button.addEventListener("touchstart", e => {
-        e.preventDefault(); // Förhindrar fördröjning
-        button.click(); // Tvinga knapptryck
+    document.addEventListener("touchend", function (event) {
+        const now = new Date().getTime();
+        if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+        }
+        lastTouchEnd = now;
+    }, false);
+
+    document.querySelectorAll("button").forEach(button => {
+        button.addEventListener("touchstart", e => {
+            e.preventDefault();
+            button.click();
+        });
     });
-});
-function setFullHeight() {
-    const vh = window.innerHeight * 0.01; // Beräkna 1% av höjden
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-}
 
-// Kör funktionen och lyssna på förändringar
-setFullHeight();
-window.addEventListener('resize', setFullHeight);
- if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("/service-worker.js").then(() => {
+    function setFullHeight() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+
+    setFullHeight();
+    window.addEventListener('resize', setFullHeight);
+
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/Instruktion/service-worker.js").then(() => {
             console.log("Service Worker registrerad!");
+        }).catch(error => {
+            console.error("Kunde inte registrera Service Worker:", error);
         });
     }
 </script>
