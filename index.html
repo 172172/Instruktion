@@ -10,10 +10,10 @@ body {
     font-family: 'Segoe UI', Tahoma, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #ff4d4d, #28a745); /* Julig gradientbakgrund */
+    background: linear-gradient(135deg, #ff4d4d, #28a745);
     color: #333;
     position: relative;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
 /* Snöflingor */
@@ -58,14 +58,14 @@ header {
 
 header h1 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 2rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
 }
 
 /* Container */
 .container {
-    max-width: 100%;
+    max-width: 1200px;
     margin: auto;
     padding: 1rem;
     animation: fadeIn 0.5s ease-in-out;
@@ -83,35 +83,9 @@ header h1 {
     margin: 1rem 0;
 }
 
-.reset-button button {
-    padding: 0.5rem 1.5rem;
-    background: linear-gradient(135deg, #28a745, #1e7c34);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: bold;
-    transition: transform 0.2s, background-color 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.reset-button button:hover {
-    transform: translateY(-2px);
-    background-color: #1e7c34;
-}
-
-.week-navigation {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    width: 100%;
-}
-
+.reset-button button,
 .week-navigation button {
-    padding: 0.5rem 1.5rem;
+    padding: 0.75rem 2rem;
     background: linear-gradient(135deg, #28a745, #1e7c34);
     color: white;
     border: none;
@@ -123,29 +97,30 @@ header h1 {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.reset-button button:hover,
 .week-navigation button:hover {
     transform: translateY(-2px);
     background-color: #1e7c34;
 }
 
 #current-view {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     color: #333;
     text-transform: uppercase;
     text-align: center;
-    margin: 0.5rem 0;
+    margin: 1rem 0;
 }
 
 /* Dagkort */
 .view {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 0.5rem;
-    margin: 1rem 0;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
 }
 
 .day-card {
-    padding: 0.5rem;
+    padding: 1rem;
     background: white;
     border-radius: 15px;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
@@ -166,16 +141,16 @@ header h1 {
 
 /* Diagramsektionen */
 .chart-container {
-    max-width: 90%;
-    margin: 1rem auto;
-    padding: 0.5rem;
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 1rem;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 canvas#progressChart {
-    max-height: 200px;
+    max-height: 300px;
     max-width: 100%;
 }
 
@@ -183,10 +158,10 @@ canvas#progressChart {
 input#task-input,
 select#task-assignee,
 button {
-    padding: 0.5rem;
+    padding: 0.75rem;
     border: 1px solid #ddd;
     border-radius: 25px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     outline: none;
 }
 
@@ -203,18 +178,34 @@ button:hover {
     background-color: #1e7c34;
 }
 
+/* Animationer */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 /* Mobilanpassning */
 @media (max-width: 768px) {
     header h1 {
         font-size: 1.2rem;
     }
 
+    .container {
+        padding: 0.5rem;
+    }
+
     .chart-container {
         max-width: 90%;
+        padding: 0.5rem;
     }
 
     .view {
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 0.5rem;
     }
 
     input#task-input,
@@ -228,6 +219,19 @@ button:hover {
         flex-direction: column;
     }
 }
+
+/* Desktop-specifik layout */
+@media (min-width: 769px) {
+    .view {
+        grid-template-columns: repeat(7, 1fr); /* Sju kolumner för dagarna */
+        gap: 1rem;
+    }
+
+    .chart-container {
+        max-width: 500px;
+    }
+}
+
 
     </style>
 </head>
