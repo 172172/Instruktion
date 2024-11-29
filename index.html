@@ -11,17 +11,19 @@ html, body {
     margin: 0;
     padding: 0;
     overflow-x: hidden; /* Förhindrar horisontell scroll */
-    height: 100%; /* Säkerställer att sidan fyller hela höjden */
+    height: 100vh; /* Använd hela viewport-höjden */
+    overscroll-behavior: contain; /* Förhindrar extra scroll vid slutet */
     position: relative;
 }
 
 body {
-touch-action: manipulation;
+    touch-action: manipulation; /* Förhindrar dubbelklicks-zoom */
     font-family: 'Segoe UI', Tahoma, sans-serif;
     background: linear-gradient(135deg, #ff4d4d, #28a745);
     color: #333;
     z-index: 1; /* Sätter innehållet över snön */
     overflow-y: auto; /* Förbättrar scroll */
+    -webkit-tap-highlight-color: transparent; /* Tar bort iOS touch-effekt */
 }
 
 /* Snöflingor */
@@ -55,7 +57,6 @@ touch-action: manipulation;
     }
 }
 
-
 /* Header */
 header {
     background: linear-gradient(135deg, #ff4d4d, #28a745);
@@ -78,6 +79,7 @@ header h1 {
     margin: auto;
     padding: 1rem;
     animation: fadeIn 0.5s ease-in-out;
+    padding-bottom: 2rem; /* Lägger till utrymme för nedersta knappar */
 }
 
 /* Navigation */
@@ -143,6 +145,19 @@ header h1 {
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.2s, box-shadow 0.3s ease;
+    min-height: 100px; /* Säkerställer lika höjd */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.day-card h3 {
+    font-size: 1rem; /* Justerar textstorlek */
+    word-wrap: break-word; /* Bryter långa ord */
+}
+
+.day-card p {
+    font-size: 0.9rem; /* Anpassar datumstorlek */
 }
 
 .day-card:hover {
@@ -178,6 +193,7 @@ button {
     border-radius: 25px;
     font-size: 1rem;
     outline: none;
+    margin-bottom: 1rem; /* Mellanrum mellan nedersta rutorna */
 }
 
 button {
@@ -186,13 +202,13 @@ button {
     cursor: pointer;
     font-weight: bold;
     transition: transform 0.2s, background-color 0.3s ease;
+    touch-action: manipulation; /* Förhindrar dubbelklicks-zoom */
+    -webkit-tap-highlight-color: transparent; /* Tar bort iOS touch-effekt */
 }
 
 button:hover {
     transform: translateY(-2px);
     background-color: #1e7c34;
-touch-action: manipulation; /* Förhindrar dubbelklicks-zoom */
-    -webkit-tap-highlight-color: transparent;
 }
 
 /* Responsiv design */
@@ -226,6 +242,7 @@ touch-action: manipulation; /* Förhindrar dubbelklicks-zoom */
         width: 100%;
     }
 }
+
 
 
     </style>
