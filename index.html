@@ -2,7 +2,7 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Familjens Kalender</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -16,6 +16,7 @@ html, body {
 }
 
 body {
+touch-action: manipulation;
     font-family: 'Segoe UI', Tahoma, sans-serif;
     background: linear-gradient(135deg, #ff4d4d, #28a745);
     color: #333;
@@ -438,6 +439,16 @@ function createSnowflakes() {
 }
 
 createSnowflakes();
+let lastTouchEnd = 0;
+
+document.addEventListener("touchend", function (event) {
+    const now = new Date().getTime();
+    if (now - lastTouchEnd <= 300) {
+        event.preventDefault(); // Förhindra dubbelklicks-zoom
+    }
+    lastTouchEnd = now;
+}, false);
+
 
 </script>
 
