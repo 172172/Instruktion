@@ -6,211 +6,26 @@
     <title>Familjens Kalender</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-body {
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #ff4d4d, #28a745);
-    color: #333;
-    position: relative;
-    overflow: hidden;
-}
+function createSnowflakes() {
+    const snowflakeContainer = document.createElement("div");
+    snowflakeContainer.id = "snowflakes";
+    document.body.appendChild(snowflakeContainer);
 
-/* Snöflingor */
-#snowflakes {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1000;
-}
+    for (let i = 0; i < 100; i++) {
+        const snowflake = document.createElement("div");
+        snowflake.className = "snowflake";
+        snowflake.style.left = `${Math.random() * 100}vw`;
+        snowflake.style.animationDuration = `${5 + Math.random() * 10}s`;
+        snowflake.style.animationDelay = `${Math.random() * 5}s`;
 
-.snowflake {
-    position: absolute;
-    top: -10px;
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    border-radius: 50%;
-    opacity: 0.8;
-    animation: fall linear infinite;
-}
+        // Lägg till mer dynamisk drift (vänster eller höger)
+        const driftDirection = Math.random() > 0.5 ? 1 : -1;
+        snowflake.style.setProperty("--drift", `${driftDirection * (50 + Math.random() * 150)}px`);
 
-@keyframes fall {
-    0% { transform: translateY(0) translateX(0); }
-    100% { transform: translateY(100vh) translateX(calc(-50px + 100vw)); }
-}
-
-/* Header */
-header {
-    background: linear-gradient(135deg, #ff4d4d, #28a745);
-    color: white;
-    text-align: center;
-    padding: 1.5rem 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-header h1 {
-    margin: 0;
-    font-size: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-}
-
-/* Container */
-.container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 1rem;
-    animation: fadeIn 0.5s ease-in-out;
-}
-
-/* Navigation */
-.navigation {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin: 1rem 0;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.navigation button {
-    padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, #28a745, #1e7c34);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.3s ease;
-}
-
-.navigation button:hover {
-    transform: translateY(-2px);
-    background-color: #1e7c34;
-}
-
-/* Vecka- och skiftcentrering */
-.week-navigation {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 0.5rem;
-}
-
-.week-navigation h2 {
-    font-size: 1.5rem;
-    margin: 0;
-}
-
-.week-navigation p {
-    font-size: 1rem;
-    color: #666;
-    margin: 0;
-}
-
-/* Dagkort */
-.view {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 1rem;
-    margin: 1rem 0;
-}
-
-.day-card {
-    padding: 1rem;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.2s, box-shadow 0.3s ease;
-}
-
-.day-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-}
-
-.day-card.today {
-    background: linear-gradient(135deg, #ff4d4d, #28a745);
-    color: white;
-}
-
-/* Diagramsektion */
-.chart-container {
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 1rem;
-    background: none; /* Transparent bakgrund */
-    box-shadow: none; /* Tar bort skugga */
-}
-
-canvas#progressChart {
-    max-height: 300px;
-    max-width: 100%;
-}
-
-/* Input och knappar */
-input#task-input,
-select#task-assignee,
-button {
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 25px;
-    font-size: 1rem;
-    outline: none;
-}
-
-button {
-    background: linear-gradient(135deg, #28a745, #1e7c34);
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-    transition: transform 0.2s, background-color 0.3s ease;
-}
-
-button:hover {
-    transform: translateY(-2px);
-    background-color: #1e7c34;
-}
-
-/* Responsiv design */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 1.5rem;
-    }
-
-    .navigation {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .chart-container {
-        max-width: 300px;
-    }
-
-    .view {
-        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-        gap: 0.5rem;
-    }
-
-    .day-card {
-        padding: 0.5rem;
-        font-size: 0.9rem;
-    }
-
-    input#task-input,
-    select#task-assignee,
-    button {
-        width: 100%;
+        snowflakeContainer.appendChild(snowflake);
     }
 }
+
     </style>
 </head>
 <body>
