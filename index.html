@@ -191,6 +191,8 @@ button {
 button:hover {
     transform: translateY(-2px);
     background-color: #1e7c34;
+touch-action: manipulation; /* Förhindrar dubbelklicks-zoom */
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Responsiv design */
@@ -448,7 +450,12 @@ document.addEventListener("touchend", function (event) {
     }
     lastTouchEnd = now;
 }, false);
-
+document.querySelectorAll("button").forEach(button => {
+    button.addEventListener("touchstart", e => {
+        e.preventDefault(); // Förhindrar fördröjning
+        button.click(); // Tvinga knapptryck
+    });
+});
 
 </script>
 
