@@ -39,12 +39,8 @@ body {
 }
 
 @keyframes fall {
-    0% {
-        transform: translateY(0) translateX(0);
-    }
-    100% {
-        transform: translateY(100vh) translateX(calc(-50px + 100vw));
-    }
+    0% { transform: translateY(0) translateX(0); }
+    100% { transform: translateY(100vh) translateX(calc(-50px + 100vw)); }
 }
 
 /* Header */
@@ -98,6 +94,27 @@ header h1 {
     background-color: #1e7c34;
 }
 
+/* Vecka- och skiftcentrering */
+.week-navigation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.5rem;
+}
+
+.week-navigation h2 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.week-navigation p {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+}
+
 /* Dagkort */
 .view {
     display: grid;
@@ -130,9 +147,8 @@ header h1 {
     max-width: 400px;
     margin: 2rem auto;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background: none; /* Transparent bakgrund */
+    box-shadow: none; /* Tar bort skugga */
 }
 
 canvas#progressChart {
@@ -195,7 +211,6 @@ button:hover {
         width: 100%;
     }
 }
-
     </style>
 </head>
 <body>
