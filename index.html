@@ -6,242 +6,242 @@
     <title>Familjens Kalender</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-/* Grundläggande inställningar */
-html, body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Förhindrar horisontell scroll */
-    height: 100vh; /* Använd hela viewport-höjden */
-    overscroll-behavior: contain; /* Förhindrar extra scroll vid slutet */
-    position: relative;
-}
+        #snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
 
-body {
-    touch-action: manipulation; /* Förhindrar dubbelklicks-zoom */
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    background: linear-gradient(135deg, #ff4d4d, #28a745);
-    color: #333;
-    z-index: 1; /* Sätter innehållet över snön */
-    overflow-y: auto; /* Förbättrar scroll */
-    -webkit-tap-highlight-color: transparent; /* Tar bort iOS touch-effekt */
-}
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            font-size: 1.5rem; /* Standardstorlek */
+            color: white;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
 
-/* Snöflingor */
-#snowflakes {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none; /* Snön påverkar inte klick eller interaktion */
-    z-index: -1; /* Flyttar snön till bakgrunden */
-}
+        @keyframes fall {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(50vh) translateX(-20px); /* Sväng lite mot vänster */
+            }
+            100% {
+                transform: translateY(100vh) translateX(20px); /* Sväng tillbaka mot höger */
+            }
+        }
 
-.snowflake {
-    position: absolute;
-    top: -10px;
-    width: 10px;
-    height: 10px;
-    background-color: white;
-    border-radius: 50%;
-    opacity: 0.8;
-    animation: fall linear infinite;
-}
+        /* Grundläggande inställningar */
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Förhindrar horisontell scroll */
+            height: calc(var(--vh, 1vh) * 100); /* Dynamisk höjd för iOS */
+            overscroll-behavior: contain; /* Förhindrar extra scroll vid slutet */
+            position: relative;
+        }
 
-@keyframes fall {
-    0% {
-        transform: translateY(0) translateX(0);
-    }
-    100% {
-        transform: translateY(100vh) translateX(var(--drift, -200px)); /* Slumpmässig drift */
-    }
-}
+        body {
+            touch-action: manipulation; /* Förhindrar dubbelklicks-zoom */
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #ff4d4d, #28a745);
+            color: #333;
+            z-index: 1; /* Sätter innehållet över snön */
+            overflow-y: auto; /* Förbättrar scroll */
+            -webkit-tap-highlight-color: transparent; /* Tar bort iOS touch-effekt */
+        }
 
-/* Header */
-header {
-    background: linear-gradient(135deg, #ff4d4d, #28a745);
-    color: white;
-    text-align: center;
-    padding: 1.5rem 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #ff4d4d, #28a745);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
 
-header h1 {
-    margin: 0;
-    font-size: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-}
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
 
-/* Container */
-.container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 1rem;
-    animation: fadeIn 0.5s ease-in-out;
-    padding-bottom: 2rem; /* Lägger till utrymme för nedersta knappar */
-}
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 1rem;
+            animation: fadeIn 0.5s ease-in-out;
+            padding-bottom: 2rem; /* Lägger till utrymme för nedersta knappar */
+        }
 
-/* Navigation */
-.navigation {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin: 1rem 0;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
+        /* Navigation */
+        .navigation {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
 
-.navigation button {
-    padding: 0.75rem 1.5rem;
-    background: linear-gradient(135deg, #28a745, #1e7c34);
-    color: white;
-    border: none;
-    border-radius: 25px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.3s ease;
-}
+        .navigation button {
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, #28a745, #1e7c34);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s ease;
+        }
 
-.navigation button:hover {
-    transform: translateY(-2px);
-    background-color: #1e7c34;
-}
+        .navigation button:hover {
+            transform: translateY(-2px);
+            background-color: #1e7c34;
+        }
 
-/* Vecka- och skiftcentrering */
-.week-navigation {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 0.5rem;
-}
+        /* Vecka- och skiftcentrering */
+        .week-navigation {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 0.5rem;
+        }
 
-.week-navigation h2 {
-    font-size: 1.5rem;
-    margin: 0;
-}
+        .week-navigation h2 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
 
-.week-navigation p {
-    font-size: 1rem;
-    color: #666;
-    margin: 0;
-}
+        .week-navigation p {
+            font-size: 1rem;
+            color: #666;
+            margin: 0;
+        }
 
-/* Dagkort */
-.view {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 1rem;
-    margin: 1rem 0;
-}
+        /* Dagkort */
+        .view {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
 
-.day-card {
-    padding: 1rem;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.2s, box-shadow 0.3s ease;
-    min-height: 100px; /* Säkerställer lika höjd */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
+        .day-card {
+            padding: 1rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.3s ease;
+            min-height: 100px; /* Säkerställer lika höjd */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-.day-card h3 {
-    font-size: 1rem; /* Justerar textstorlek */
-    word-wrap: break-word; /* Bryter långa ord */
-}
+        .day-card h3 {
+            font-size: 1rem; /* Justerar textstorlek */
+            word-wrap: break-word; /* Bryter långa ord */
+        }
 
-.day-card p {
-    font-size: 0.9rem; /* Anpassar datumstorlek */
-}
+        .day-card p {
+            font-size: 0.9rem; /* Anpassar datumstorlek */
+        }
 
-.day-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-}
+        .day-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
 
-.day-card.today {
-    background: linear-gradient(135deg, #ff4d4d, #28a745);
-    color: white;
-}
+        .day-card.today {
+            background: linear-gradient(135deg, #ff4d4d, #28a745);
+            color: white;
+        }
 
-/* Diagramsektion */
-.chart-container {
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 1rem;
-    background: none; /* Transparent bakgrund */
-    box-shadow: none; /* Tar bort skugga */
-}
+        /* Diagramsektion */
+        .chart-container {
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: none; /* Transparent bakgrund */
+            box-shadow: none; /* Tar bort skugga */
+        }
 
-canvas#progressChart {
-    max-height: 300px;
-    max-width: 100%;
-}
+        canvas#progressChart {
+            max-height: 300px;
+            max-width: 100%;
+        }
 
-/* Input och knappar */
-input#task-input,
-select#task-assignee,
-button {
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 25px;
-    font-size: 1rem;
-    outline: none;
-    margin-bottom: 1rem; /* Mellanrum mellan nedersta rutorna */
-}
+        /* Input och knappar */
+        input#task-input,
+        select#task-assignee,
+        button {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            margin-bottom: 1rem; /* Mellanrum mellan nedersta rutorna */
+        }
 
-button {
-    background: linear-gradient(135deg, #28a745, #1e7c34);
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-    transition: transform 0.2s, background-color 0.3s ease;
-    touch-action: manipulation; /* Förhindrar dubbelklicks-zoom */
-    -webkit-tap-highlight-color: transparent; /* Tar bort iOS touch-effekt */
-}
+        button {
+            background: linear-gradient(135deg, #28a745, #1e7c34);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, background-color 0.3s ease;
+            touch-action: manipulation; /* Förhindrar dubbelklicks-zoom */
+            -webkit-tap-highlight-color: transparent; /* Tar bort iOS touch-effekt */
+        }
 
-button:hover {
-    transform: translateY(-2px);
-    background-color: #1e7c34;
-}
+        button:hover {
+            transform: translateY(-2px);
+            background-color: #1e7c34;
+        }
 
-/* Responsiv design */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 1.5rem;
-    }
+        /* Responsiv design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
 
-    .navigation {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
+            .navigation {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
 
-    .chart-container {
-        max-width: 300px;
-    }
+            .chart-container {
+                max-width: 300px;
+            }
 
-    .view {
-        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-        gap: 0.5rem;
-    }
+            .view {
+                grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+                gap: 0.5rem;
+            }
 
-    .day-card {
-        padding: 0.5rem;
-        font-size: 0.9rem;
-    }
+            .day-card {
+                padding: 0.5rem;
+                font-size: 0.9rem;
+            }
 
-    input#task-input,
-    select#task-assignee,
-    button {
-        width: 100%;
-    }
-}
+            input#task-input,
+            select#task-assignee,
+            button {
+                width: 100%;
+            }
+        }
 
 
 
@@ -450,14 +450,21 @@ function createSnowflakes() {
     for (let i = 0; i < 100; i++) {
         const snowflake = document.createElement("div");
         snowflake.className = "snowflake";
+
+        // Slumpmässiga storlekar, opaciteter och drifter
         snowflake.style.left = `${Math.random() * 100}vw`;
         snowflake.style.animationDuration = `${5 + Math.random() * 10}s`;
         snowflake.style.animationDelay = `${Math.random() * 5}s`;
+        snowflake.style.fontSize = `${Math.random() * 1.5 + 0.5}rem`;
+        snowflake.style.opacity = Math.random();
+
+        snowflake.textContent = "❄"; // Lägg till snöflinga som text
         snowflakeContainer.appendChild(snowflake);
     }
 }
 
 createSnowflakes();
+
 let lastTouchEnd = 0;
 
 document.addEventListener("touchend", function (event) {
@@ -473,6 +480,14 @@ document.querySelectorAll("button").forEach(button => {
         button.click(); // Tvinga knapptryck
     });
 });
+function setFullHeight() {
+    const vh = window.innerHeight * 0.01; // Beräkna 1% av höjden
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+// Kör funktionen och lyssna på förändringar
+setFullHeight();
+window.addEventListener('resize', setFullHeight);
 
 </script>
 
