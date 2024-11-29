@@ -6,15 +6,14 @@
     <title>Familjens Kalender</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-/* Grundstil */
 body {
     font-family: 'Segoe UI', Tahoma, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #ff4d4d, #28a745);
+    background: linear-gradient(135deg, #ff4d4d, #28a745); /* Julig gradientbakgrund */
     color: #333;
     position: relative;
-    overflow-x: hidden; /* Förhindra horisontell scroll */
+    overflow: hidden;
 }
 
 /* Snöflingor */
@@ -53,46 +52,45 @@ header {
     background: linear-gradient(135deg, #ff4d4d, #28a745);
     color: white;
     text-align: center;
-    padding: 1.5rem 0; /* Mindre padding för mobilen */
+    padding: 1.5rem 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 header h1 {
     margin: 0;
-    font-size: 1.8rem; /* Mindre textstorlek för bättre mobilanpassning */
+    font-size: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
 }
 
 /* Container */
 .container {
-    max-width: 1200px;
+    max-width: 100%;
     margin: auto;
     padding: 1rem;
     animation: fadeIn 0.5s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Navigation */
 .navigation {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    margin: 2rem 0;
-}
-
-.reset-button {
-    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
 }
 
 .reset-button button {
-    padding: 0.75rem 2rem;
+    padding: 0.5rem 1.5rem;
     background: linear-gradient(135deg, #28a745, #1e7c34);
     color: white;
     border: none;
     border-radius: 25px;
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: bold;
     transition: transform 0.2s, background-color 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -105,12 +103,11 @@ header h1 {
 
 .week-navigation {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
     width: 100%;
-    max-width: 700px;
-    flex-wrap: wrap; /* Gör att knappar lägger sig snyggt på mindre skärmar */
 }
 
 .week-navigation button {
@@ -120,7 +117,7 @@ header h1 {
     border: none;
     border-radius: 25px;
     cursor: pointer;
-    font-size: 0.9rem; /* Mindre textstorlek */
+    font-size: 1rem;
     font-weight: bold;
     transition: transform 0.2s, background-color 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -132,26 +129,26 @@ header h1 {
 }
 
 #current-view {
-    font-size: 1.2rem; /* Mindre textstorlek */
+    font-size: 1.2rem;
     color: #333;
     text-transform: uppercase;
     text-align: center;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
 }
 
 /* Dagkort */
 .view {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Anpassa till mobilstorlek */
-    gap: 0.5rem; /* Mindre mellanrum för mobil */
-    margin: 1rem 0; /* Mindre marginaler */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.5rem;
+    margin: 1rem 0;
 }
 
 .day-card {
-    padding: 0.8rem; /* Mindre padding */
+    padding: 0.5rem;
     background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.3s ease;
@@ -159,7 +156,7 @@ header h1 {
 
 .day-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .day-card.today {
@@ -167,55 +164,18 @@ header h1 {
     color: white;
 }
 
-.day-card.holiday {
-    background-color: #ffe6e6;
-    border: 2px solid #ff4d4d;
-    color: #ff4d4d;
-}
-
-.day-card.selected {
-    border: 3px solid #28a745;
-    box-shadow: 0 8px 15px rgba(40, 167, 69, 0.3);
-}
-
-.day-card h3 {
-    margin: 0;
-    font-size: 1rem; /* Mindre textstorlek */
-    text-transform: capitalize;
-}
-
-.day-card p {
-    margin: 0.3rem 0; /* Mindre marginal */
-    color: #555;
-    font-size: 0.8rem; /* Mindre textstorlek */
-}
-
-/* Uppgiftslista */
-.tasks-list li {
-    list-style: none;
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.9rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background: #fff;
-}
-
 /* Diagramsektionen */
 .chart-container {
-    max-width: 300px; /* Mindre storlek för mobil */
-    margin: 1rem auto; /* Mindre marginal */
+    max-width: 90%;
+    margin: 1rem auto;
     padding: 0.5rem;
     background: rgba(255, 255, 255, 0.8);
-    border-radius: 10px; /* Rundare hörn */
+    border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 canvas#progressChart {
-    max-height: 200px; /* Mindre höjd */
+    max-height: 200px;
     max-width: 100%;
 }
 
@@ -223,10 +183,10 @@ canvas#progressChart {
 input#task-input,
 select#task-assignee,
 button {
-    padding: 0.5rem; /* Mindre padding */
+    padding: 0.5rem;
     border: 1px solid #ddd;
-    border-radius: 15px;
-    font-size: 0.9rem; /* Mindre textstorlek */
+    border-radius: 25px;
+    font-size: 0.9rem;
     outline: none;
 }
 
@@ -243,13 +203,29 @@ button:hover {
     background-color: #1e7c34;
 }
 
-/* Animationer */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
+/* Mobilanpassning */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.2rem;
     }
-    to {
-        opacity: 1;
+
+    .chart-container {
+        max-width: 90%;
+    }
+
+    .view {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    input#task-input,
+    select#task-assignee,
+    button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .week-navigation {
+        flex-direction: column;
     }
 }
 
